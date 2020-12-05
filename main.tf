@@ -28,7 +28,7 @@ resource "google_compute_instance" "homelab_edge" {
   }
 
   metadata = {
-    ssh-keys = "khuedoan:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "admin:${file("~/.ssh/id_rsa.pub")}"
   }
 
   depends_on = [
