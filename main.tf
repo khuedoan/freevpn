@@ -27,7 +27,15 @@ resource "google_compute_instance" "homelab_edge" {
     }
   }
 
+  metadata = {
+    ssh-keys = "khuedoan:${file("~/.ssh/id_rsa.pub")}"
+  }
+
   depends_on = [
     google_project_service.compute_engine_api
   ]
+}
+
+output "ip" {
+  value = google_compute_instance.homelab_edge.network_interface.0.access_config.0.nat_ip
 }
