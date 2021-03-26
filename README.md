@@ -1,6 +1,7 @@
 # Edge
 
-Create an always free WireGuard VPN and HAProxy on Oracle Cloud using Terraform and Ansible
+Create an always free WireGuard VPN and HAProxy on Oracle Cloud using Terraform and Ansible.
+This is useful if you can't port forward because you don't have access to the router admin settings or you have double NAT.
 
 ## Architecture
 
