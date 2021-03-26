@@ -10,6 +10,7 @@ resource "oci_core_instance" "instance" {
 	}
 	metadata = {
 		ssh_authorized_keys = var.ssh_public_key
+    user_data = ""
 	}
 	shape = var.instance_shape
 	source_details {
