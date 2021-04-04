@@ -39,11 +39,36 @@ resource "oci_core_vcn" "vcn" {
   compartment_id = var.compartment_id
 }
 
+resource "oci_core_security_list" "security_list" {
+  compartment_id = var.compartment_id
+  vcn_id         = oci_core_vcn.vcn.id
+
+  ingress_security_rules {
+    protocol  = "17" # UDP
+    source    = "0.0.0.0/0"
+    stateless = false
+
+    udp_options {
+      source_port_range {
+        min = 1
+        max = 65535
+      }
+
+      min = 51820
+      max = 51820
+    }
+  }
+}
+
 resource "oci_core_subnet" "subnet" {
   cidr_block     = var.subnet_cidr_block
   compartment_id = var.compartment_id
   route_table_id = oci_core_vcn.vcn.default_route_table_id
   vcn_id         = oci_core_vcn.vcn.id
+  security_list_ids   = [
+    oci_core_vcn.vcn.default_security_list_id,
+    oci_core_security_list.security_list.id
+  ]
 }
 
 resource "oci_core_internet_gateway" "internet_gateway" {
