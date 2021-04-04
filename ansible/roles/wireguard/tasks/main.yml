@@ -1,0 +1,22 @@
+- name: Wireguard container
+  docker_container:
+    name: wireguard
+    image: linuxserver/wireguard
+    state: started
+    restart_policy: unless-stopped
+    capabilities:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      net.ipv4.conf.all.src_valid_mark: 1
+    ports:
+      - 51820:51820/udp
+    volumes:
+      - /lib/modules:/lib/modules
+    env:
+      PUID: "1000"
+      PGID: "1000"
+      PEERS: "1"
+      PEERDNS: "auto"
+      INTERNAL_SUBNET: "10.13.13.0"
+      ALLOWEDIPS: "0.0.0.0/0"
