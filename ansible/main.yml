@@ -1,4 +1,10 @@
 - hosts: all
+  tasks:
+    - name: Wait for Docker
+      wait_for:
+        path: /var/run/docker.sock
+
+- hosts: all
   become: yes
   roles:
     - role: wireguard
