@@ -13,7 +13,7 @@
       - 51820:51820/udp
     volumes:
       - /lib/modules:/lib/modules
-      - /config:/config
+      - /etc/wireguard:/config
     env:
       PUID: "1000"
       PGID: "1000"
