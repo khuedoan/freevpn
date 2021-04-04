@@ -3,7 +3,7 @@
     name: wireguard
     image: linuxserver/wireguard
     state: started
-    restart_policy: unless-stopped
+    restart_policy: always
     capabilities:
       - NET_ADMIN
       - SYS_MODULE
