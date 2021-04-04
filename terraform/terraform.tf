@@ -3,14 +3,14 @@ terraform {
     organization = "khuedoan"
 
     workspaces {
-      name = "homelab-edge"
+      name = "edge"
     }
   }
 
   required_providers {
     oci = {
       source = "hashicorp/oci"
-      version = "4.16.0"
+      version = "4.20.0"
     }
   }
 }
