@@ -30,7 +30,7 @@ resource "oci_core_instance" "instance" {
 
   metadata = {
     ssh_authorized_keys = tls_private_key.ssh.public_key_openssh
-    user_data           = ""
+    user_data           = filebase64("${path.module}/cloud-init.yaml")
   }
 }
 
