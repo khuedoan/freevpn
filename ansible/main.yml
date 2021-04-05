@@ -12,3 +12,4 @@
   become: yes
   roles:
     - role: wireguard
+    - role: haproxy

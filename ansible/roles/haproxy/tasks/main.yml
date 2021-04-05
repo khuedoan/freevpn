@@ -1,0 +1,13 @@
+- name: HAProxy container
+  docker_container:
+    name: haproxy
+    image: haproxy
+    state: started
+    restart_policy: always
+    sysctls:
+      net.ipv4.ip_unprivileged_port_start: 0
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/haproxy:/usr/local/etc/haproxy
