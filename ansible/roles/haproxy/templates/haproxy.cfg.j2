@@ -1,0 +1,9 @@
+listen http
+  bind *:80
+  mode tcp
+  server default 10.13.13.3:80 send-proxy
+
+listen https
+  bind *:443
+  mode tcp
+  server default 10.13.13.3:443 send-proxy

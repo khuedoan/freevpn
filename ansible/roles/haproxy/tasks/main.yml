@@ -1,3 +1,8 @@
+- name: Add HAProxy config
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+
 - name: HAProxy container
   docker_container:
     name: haproxy
