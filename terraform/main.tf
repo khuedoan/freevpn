@@ -44,9 +44,10 @@ resource "oci_core_security_list" "security_list" {
   vcn_id         = oci_core_vcn.vcn.id
 
   ingress_security_rules {
-    protocol  = "17" # UDP
-    source    = "0.0.0.0/0"
-    stateless = false
+    description = "Wireguard"
+    protocol    = "17" # UDP
+    source      = "0.0.0.0/0"
+    stateless   = false
 
     udp_options {
       source_port_range {
@@ -58,6 +59,40 @@ resource "oci_core_security_list" "security_list" {
       max = 51820
     }
   }
+
+  ingress_security_rules {
+    description = "HTTP"
+    protocol    = "6" # TCP
+    source      = "0.0.0.0/0"
+    stateless   = false
+
+    tcp_options {
+      source_port_range {
+        min = 1
+        max = 65535
+      }
+
+      min = 80
+      max = 80
+    }
+  }
+
+  ingress_security_rules {
+    description = "HTTPS"
+    protocol    = "6" # TCP
+    source      = "0.0.0.0/0"
+    stateless   = false
+
+    tcp_options {
+      source_port_range {
+        min = 1
+        max = 65535
+      }
+
+      min = 443
+      max = 443
+    }
+  }
 }
 
 resource "oci_core_subnet" "subnet" {
@@ -65,7 +100,8 @@ resource "oci_core_subnet" "subnet" {
   compartment_id = var.compartment_id
   route_table_id = oci_core_vcn.vcn.default_route_table_id
   vcn_id         = oci_core_vcn.vcn.id
-  security_list_ids   = [
+
+  security_list_ids = [
     oci_core_vcn.vcn.default_security_list_id,
     oci_core_security_list.security_list.id
   ]
@@ -91,7 +127,8 @@ resource "null_resource" "ansible" {
   }
 
   provisioner "local-exec" {
-    command     = "ansible-playbook -u ubuntu -i ${oci_core_instance.instance.public_ip}, --private-key ${local_file.ssh_private_key.filename} ${path.module}/../ansible/main.yml"
+    command = "ansible-playbook -u ubuntu -i ${oci_core_instance.instance.public_ip}, --private-key ${local_file.ssh_private_key.filename} ${path.module}/../ansible/main.yml"
+
     environment = {
       ANSIBLE_HOST_KEY_CHECKING = "False"
     }
