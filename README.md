@@ -46,8 +46,16 @@ EOT
 
 ## Usage
 
-Get QR code:
+Get QR code for mobile:
 
 ```sh
 ssh -i ./private.pem ubuntu@$OUTPUT_IP sudo docker exec wireguard /app/show-peer 1
+```
+
+Get config for desktop (you may need to restart your browser):
+
+```sh
+ssh -i private.pem ubuntu@129.159.42.171 sudo cat /etc/wireguard/peer2/peer2.conf > wg0.conf
+nmcli connection import type wireguard file wg0.conf
+nmcli connection up wg0
 ```
