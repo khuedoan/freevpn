@@ -123,7 +123,7 @@ resource "oci_core_default_route_table" "default_route_table" {
 
 resource "null_resource" "ansible" {
   triggers = {
-    always_run = timestamp()
+    ansible_hash = md5(join("", [for f in fileset("${path.module}/ansible/", "**"): file("${path.module}/ansible/${f}")]))
   }
 
   provisioner "local-exec" {
