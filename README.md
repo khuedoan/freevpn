@@ -29,7 +29,7 @@ This is useful if you can't port forward because you don't have access to the ro
   - Select Generate API Key Pair, download the private key and click Add
   - Check the Configuration File Preview for the values
 
-Put those values in `terraform/terraform.auto.tfvars`:
+Put those values in `./terraform.auto.tfvars`:
 
 ```ini
 user_ocid = "ocid1.user.xxx"
@@ -49,5 +49,5 @@ EOT
 Get QR code:
 
 ```sh
-ssh -i private.pem ubuntu@$OUTPUT_IP sudo docker exec wireguard /app/show-peer 1
+ssh -i ./private.pem ubuntu@$OUTPUT_IP sudo docker exec wireguard /app/show-peer 1
 ```
