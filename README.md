@@ -49,5 +49,5 @@ EOT
 Get QR code:
 
 ```sh
-ssh -i terraform/private.pem ubuntu@$OUTPUT_IP sudo docker exec wireguard /app/show-peer 1
+ssh -i private.pem ubuntu@$OUTPUT_IP sudo docker exec wireguard /app/show-peer 1
 ```

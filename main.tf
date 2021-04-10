@@ -127,7 +127,7 @@ resource "null_resource" "ansible" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -u ubuntu -i ${oci_core_instance.instance.public_ip}, --private-key ${local_file.ssh_private_key.filename} ${path.module}/../ansible/main.yml"
+    command = "ansible-playbook -u ubuntu -i ${oci_core_instance.instance.public_ip}, --private-key ${local_file.ssh_private_key.filename} ${path.module}/ansible/main.yml"
 
     environment = {
       ANSIBLE_HOST_KEY_CHECKING = "False"
