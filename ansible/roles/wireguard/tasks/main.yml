@@ -17,7 +17,9 @@
     env:
       PUID: "1000"
       PGID: "1000"
-      PEERS: "2"
+      PEERS: >-
+        phone
+        laptop
       PEERDNS: "auto"
       INTERNAL_SUBNET: "10.13.13.0"
       ALLOWEDIPS: "0.0.0.0/0"

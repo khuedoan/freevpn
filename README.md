@@ -49,13 +49,13 @@ EOT
 Get QR code for mobile:
 
 ```sh
-ssh -i ./private.pem ubuntu@$OUTPUT_IP sudo docker exec wireguard /app/show-peer 1
+ssh -i ./private.pem ubuntu@$OUTPUT_IP sudo docker exec wireguard /app/show-peer phone
 ```
 
-Get config for desktop (you may need to restart your browser):
+Get config for Linux laptop:
 
 ```sh
-ssh -i private.pem ubuntu@129.159.42.171 sudo cat /etc/wireguard/peer2/peer2.conf > wg0.conf
+ssh -i private.pem ubuntu@$OUTPUT_IP sudo cat /etc/wireguard/peer_laptop/peer_laptop.conf > wg0.conf
 nmcli connection import type wireguard file wg0.conf
 nmcli connection up wg0
 ```
