@@ -1,0 +1,13 @@
+- name: Get Wireguard config for PC
+  become: true
+  command: cat /etc/wireguard/peer_laptop/peer_laptop.conf
+  register: peer_laptop
+
+- debug: var=peer_laptop.stdout_lines
+
+- name: Get Wireguard QR code for phone
+  become: true
+  command: docker exec wireguard /app/show-peer phone
+  register: peer_phone
+
+- debug: var=peer_phone.stdout_lines

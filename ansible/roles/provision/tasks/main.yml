@@ -1,0 +1,13 @@
+- name: Update all packages to their latest version
+  become: true
+  apt:
+    update_cache: yes
+
+- name: Install dependency packages
+  become: true
+  apt:
+    name:
+      - containerd.io 
+      - python3-docker
+    state: present
+    update_cache: true
