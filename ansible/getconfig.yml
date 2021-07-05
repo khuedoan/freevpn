@@ -3,4 +3,3 @@
   gather_facts: no
   roles:
     - wireguard.getconfig
-    
