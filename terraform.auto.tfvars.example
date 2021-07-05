@@ -1,0 +1,10 @@
+user_ocid = "ocid1.user.oc1..REDACTED"
+fingerprint = "2c:e2:6c:51:8a:43:36:REDACTED"
+tenancy_ocid = "ocid1.tenancy.oc1..REDACTED"
+region = "ap-osaka-1"
+compartment_id = "ocid1.tenancy.oc1..REDACTED" # likely the same as tenancy_ocid; sudo oci iam availability-domain list
+private_key = <<-EOF
+-----BEGIN PRIVATE KEY-----
+MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDjFM7nnlQKsL9t
+-----END PRIVATE KEY-----
+EOF
