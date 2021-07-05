@@ -3,7 +3,7 @@ terraform {
     organization = "khuedoan"
 
     workspaces {
-      name = "edge"
+      name = "vpn"
     }
   }
 
