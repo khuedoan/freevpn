@@ -1,28 +1,13 @@
-# Edge
+# VPN
 
-Create an always free edge node with WireGuard and HAProxy on Oracle Cloud using Terraform and Ansible.
-This is useful if you can't port forward because you don't have access to the router admin settings or you have double NAT.
-
-## Architecture
-
-```
-                                                   ┌─────────────────────────┐
-                                                   │         Homelab         │
-                                                   ├─────────────────────────┤
-          ┌────────────────────────────────┐       │           ┌───────────┐ │
-          │          Oracle Cloud          │       │       ┌──►│ Service 1 │ │
-          ├────────────────────────────────┤       │       │   └───────────┘ │
-┌──────┐  │   ┌─────────┐   ┌───────────┐  │   ┌───┴────┐  │   ┌───────────┐ │
-│ User ├──┼──►│ HAProxy ├──►│ Wireguard ├──┼──►│ Router ├──┼──►│ Service 2 │ │
-└──────┘  │   └─────────┘   └───────────┘  │   └───┬────┘  │   └───────────┘ │
-          └────────────────────────────────┘       │       │   ┌───────────┐ │
-                                                   │       └──►│ Service 3 │ │
-                                                   │           └───────────┘ │
-                                                   └─────────────────────────┘
-```
+Create an always free WireGuard VPN server on Oracle Cloud using Terraform and Ansible.
 
 ## Prerequisites
 
+- Install the following packages:
+  - `terraform`
+  - `ansible`
+- Create a Terraform backend (I'm using [Terraform Cloud](https://app.terraform.io))
 - Create an Oracle Cloud account
 - Generate an API signing key:
   - Profile menu (User menu icon) -> User Settings -> API Keys -> Add API Key
@@ -42,6 +27,15 @@ private_key = <<EOT
 xxx (from the downloaded private key)
 -----END PRIVATE KEY-----
 EOT
+```
+
+## Provision
+
+Change your backend config in [./terraform.tf](./terraform.tf#L2) (or you can remove that block and use local backend), then apply:
+
+```sh
+terraform init
+terraform apply
 ```
 
 ## Usage
