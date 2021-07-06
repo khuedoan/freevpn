@@ -1,6 +1,6 @@
 resource "tls_private_key" "ssh" {
-  algorithm = "RSA"
-  rsa_bits  = "2048"
+  algorithm   = "ECDSA"
+  ecdsa_curve = "P256"
 }
 
 resource "local_file" "ssh_private_key" {
