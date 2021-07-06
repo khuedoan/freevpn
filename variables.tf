@@ -10,6 +10,7 @@ variable "region" {}
 variable "private_key" {}
 
 variable "instance_image_id" {
+  # check https://docs.oracle.com/en-us/iaas/images/image/1ae1a20e-0f60-442e-b68f-cb9460ab2106/
   default = "ocid1.image.oc1.ap-osaka-1.aaaaaaaavbtmrf6kcgh4dsewl7fsjlwcjkdwaeiqalsstjgb4ipnqeveo6da"
 }
 

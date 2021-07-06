@@ -44,7 +44,6 @@ resource "oci_core_instance" "instance" {
 
   metadata = {
     ssh_authorized_keys = tls_private_key.ssh.public_key_openssh
-    # ssh_authorized_keys = file("/Users/svphan/.ssh/id_rsa.pub")
   }
 }
 

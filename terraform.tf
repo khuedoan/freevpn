@@ -1,4 +1,12 @@
 terraform {
+  backend "remote" {
+    organization = "khuedoan"
+
+    workspaces {
+      name = "vpn"
+    }
+  }
+  
   required_providers {
     oci = {
       source  = "hashicorp/oci"
