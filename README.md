@@ -1,5 +1,7 @@
 # VPN
 
+Deprecated in favor of the [freecloud](https://github.com/khuedoan/freecloud) project.
+
 Create an always free WireGuard VPN server on Oracle Cloud using Terraform and Ansible.
 
 ## Prerequisites
