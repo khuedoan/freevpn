@@ -1,0 +1,14 @@
+- name: Install Docker
+  become: yes
+  apt:
+    name:
+      - docker.io
+      - docker-compose
+      - python3-docker
+
+- name: Enable and start Docker service
+  become: yes
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
