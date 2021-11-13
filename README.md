@@ -29,13 +29,26 @@ xxx (from the downloaded private key)
 EOT
 ```
 
-## Provision
+## Get started
 
-Change your backend config in [./terraform.tf](./terraform.tf#L2) (or you can remove that block and use local backend), then apply:
+### Create the VM
+
+Change your backend config in [./infra/versions.tf](./terraform.tf#L5) (or you can remove that block and use local backend), then apply:
 
 ```sh
+cd infra
 terraform init
 terraform apply
+cd ..
+```
+
+Note the IP address in output.
+
+### Configure the VM
+
+```sh
+cd config
+ansible-playbook -u ubuntu -i ${IP_ADDRESS}, --private-key private.pem main.yml
 ```
 
 ## Usage
@@ -43,6 +56,8 @@ terraform apply
 Get SSH key:
 
 ```sh
+cd infra
+terraform init
 terraform show -json | jq --raw-output '.values.root_module.resources[] | select(.address == "tls_private_key.ssh") | .values.private_key_pem' > private.pem
 chmod 600 private.pem
 ```
@@ -50,13 +65,13 @@ chmod 600 private.pem
 Get QR code for mobile:
 
 ```sh
-ssh -i ./private.pem ubuntu@$OUTPUT_IP sudo docker exec wireguard /app/show-peer phone
+ssh -i ./private.pem ubuntu@${IP_ADDRESS} sudo docker exec wireguard /app/show-peer phone
 ```
 
 Get config for Linux laptop:
 
 ```sh
-ssh -i private.pem ubuntu@$OUTPUT_IP sudo cat /etc/wireguard/peer_laptop/peer_laptop.conf > wg0.conf
+ssh -i private.pem ubuntu@${IP_ADDRESS} sudo cat /etc/wireguard/peer_laptop/peer_laptop.conf > wg0.conf
 nmcli connection import type wireguard file wg0.conf
 nmcli connection up wg0
 ```
