@@ -31,47 +31,34 @@ EOT
 
 ## Get started
 
-### Create the VM
+### Provision
 
-Change your backend config in [./infra/versions.tf](./terraform.tf#L5) (or you can remove that block and use local backend), then apply:
+Change your backend config in [./infra/versions.tf](./terraform.tf#L5) (or you can remove that block and use local backend), then run:
 
 ```sh
-cd infra
-terraform init
-terraform apply
-cd ..
+make
 ```
 
 Note the IP address in output.
 
-### Configure the VM
-
-```sh
-cd config
-ansible-playbook -u ubuntu -i ${IP_ADDRESS}, --private-key private.pem main.yml
-```
-
 ## Usage
-
-Get SSH key:
-
-```sh
-cd infra
-terraform init
-terraform show -json | jq --raw-output '.values.root_module.resources[] | select(.address == "tls_private_key.ssh") | .values.private_key_pem' > private.pem
-chmod 600 private.pem
-```
 
 Get QR code for mobile:
 
 ```sh
-ssh -i ./private.pem ubuntu@${IP_ADDRESS} sudo docker exec wireguard /app/show-peer phone
+make qr
 ```
 
 Get config for Linux laptop:
 
 ```sh
-ssh -i private.pem ubuntu@${IP_ADDRESS} sudo cat /etc/wireguard/peer_laptop/peer_laptop.conf > wg0.conf
+make nmconf > wg0.conf
 nmcli connection import type wireguard file wg0.conf
 nmcli connection up wg0
+```
+
+Get SSH key:
+
+```sh
+make -C infra private.pem
 ```
