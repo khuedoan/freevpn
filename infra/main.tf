@@ -4,7 +4,7 @@ resource "tls_private_key" "ssh" {
 }
 
 resource "oci_identity_compartment" "vpn" {
-  compartment_id = var.tenancy_ocid
+  compartment_id = var.tenancy_id
   name           = "vpn"
   description    = "VPN"
 }
@@ -15,8 +15,8 @@ data "oci_identity_availability_domains" "availability_domains" {
 
 data "oci_core_images" "image" {
   compartment_id           = oci_identity_compartment.vpn.id
-  operating_system         = var.image.operating_system
-  operating_system_version = var.image.version
+  operating_system         = "Canonical Ubuntu"
+  operating_system_version = "20.04 Minimal"
   shape                    = var.instance_shape
   sort_by                  = "TIMECREATED"
   sort_order               = "DESC"
