@@ -3,12 +3,6 @@ resource "tls_private_key" "ssh" {
   ecdsa_curve = "P256"
 }
 
-resource "local_file" "ssh_private_key" {
-  content         = tls_private_key.ssh.private_key_pem
-  filename        = "${path.module}/private.pem"
-  file_permission = "0600"
-}
-
 resource "oci_identity_compartment" "vpn" {
   compartment_id = var.tenancy_ocid
   name           = "vpn"

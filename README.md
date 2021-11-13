@@ -40,6 +40,13 @@ terraform apply
 
 ## Usage
 
+Get SSH key:
+
+```sh
+terraform show -json | jq --raw-output '.values.root_module.resources[] | select(.address == "tls_private_key.ssh") | .values.private_key_pem' > private.pem
+chmod 600 private.pem
+```
+
 Get QR code for mobile:
 
 ```sh
