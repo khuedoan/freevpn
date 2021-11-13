@@ -43,7 +43,6 @@ resource "oci_core_instance" "instance" {
 
   metadata = {
     ssh_authorized_keys = tls_private_key.ssh.public_key_openssh
-    user_data           = filebase64("${path.module}/cloud-init.yaml")
   }
 
   lifecycle {
@@ -157,18 +156,4 @@ resource "oci_core_default_route_table" "default_route_table" {
     network_entity_id = oci_core_internet_gateway.internet_gateway.id
   }
   manage_default_resource_id = oci_core_vcn.vcn.default_route_table_id
-}
-
-resource "null_resource" "ansible" {
-  triggers = {
-    ansible_hash = md5(join("", [for f in fileset("${path.module}/ansible/", "**"): file("${path.module}/ansible/${f}")]))
-  }
-
-  provisioner "local-exec" {
-    command = "ansible-playbook -u ubuntu -i ${oci_core_instance.instance.public_ip}, --private-key ${local_file.ssh_private_key.filename} ${path.module}/ansible/main.yml"
-
-    environment = {
-      ANSIBLE_HOST_KEY_CHECKING = "False"
-    }
-  }
 }
