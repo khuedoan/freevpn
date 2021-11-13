@@ -45,7 +45,7 @@ resource "oci_core_instance" "instance" {
 }
 
 resource "oci_core_vcn" "vcn" {
-  cidr_block     = var.vcn_cidr_blocks[0] # TODO deprecated, use cidr_blocks instead
+  cidr_blocks    = var.vcn_cidr_blocks
   compartment_id = oci_identity_compartment.vpn.id
 }
 
