@@ -33,7 +33,7 @@ EOT
 
 ### Provision
 
-Change your backend config in [`./infra/versions.tf`](./infra/terraform.tf#L5) (or you can remove that block and use local backend), then run:
+Change your backend config in [`./infra/versions.tf`](./infra/versions.tf#L5) (or you can remove that block and use local backend), then run:
 
 ```sh
 make
