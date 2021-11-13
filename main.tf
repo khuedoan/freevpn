@@ -14,7 +14,7 @@ data "oci_identity_availability_domains" "availability_domains" {
 }
 
 data "oci_core_images" "image" {
-  compartment_id = oci_identity_compartment.vpn.id
+  compartment_id           = oci_identity_compartment.vpn.id
   operating_system         = var.image.operating_system
   operating_system_version = var.image.version
   shape                    = var.instance_shape
@@ -53,12 +53,12 @@ resource "oci_core_instance" "instance" {
 }
 
 data "oci_core_vnic_attachments" "vnic_attachments" {
-  compartment_id      = oci_identity_compartment.vpn.id
-  instance_id         = oci_core_instance.instance.id
+  compartment_id = oci_identity_compartment.vpn.id
+  instance_id    = oci_core_instance.instance.id
 }
 
 data "oci_core_vnic" "vnic" {
-  vnic_id = lookup(data.oci_core_vnic_attachments.vnic_attachments.vnic_attachments[0],"vnic_id")
+  vnic_id = lookup(data.oci_core_vnic_attachments.vnic_attachments.vnic_attachments[0], "vnic_id")
 }
 
 data "oci_core_private_ips" "private_ip" {
@@ -66,9 +66,9 @@ data "oci_core_private_ips" "private_ip" {
 }
 
 resource "oci_core_public_ip" "public_ip" {
-  compartment_id      = oci_identity_compartment.vpn.id
+  compartment_id = oci_identity_compartment.vpn.id
   lifetime       = "RESERVED"
-  private_ip_id  = lookup(data.oci_core_private_ips.private_ip.private_ips[0],"id")
+  private_ip_id  = lookup(data.oci_core_private_ips.private_ip.private_ips[0], "id")
 }
 
 resource "oci_core_vcn" "vcn" {
