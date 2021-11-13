@@ -1,5 +1,4 @@
-.terraform/
+.terraform*
 
-*.pem
-*.terraform.lock.hcl
 *.tfvars
+private.pem
