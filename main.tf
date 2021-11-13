@@ -13,6 +13,15 @@ data "oci_identity_availability_domains" "availability_domains" {
   compartment_id = oci_identity_compartment.vpn.id
 }
 
+data "oci_core_images" "image" {
+  compartment_id = oci_identity_compartment.vpn.id
+  operating_system         = var.image.operating_system
+  operating_system_version = var.image.version
+  shape                    = var.instance_shape
+  sort_by                  = "TIMECREATED"
+  sort_order               = "DESC"
+}
+
 resource "oci_core_instance" "instance" {
   availability_domain = data.oci_identity_availability_domains.availability_domains.availability_domains[0].name
   compartment_id      = oci_identity_compartment.vpn.id
@@ -29,12 +38,18 @@ resource "oci_core_instance" "instance" {
 
   source_details {
     source_type = "image"
-    source_id   = var.instance_image_id
+    source_id   = data.oci_core_images.image.images[0].id
   }
 
   metadata = {
     ssh_authorized_keys = tls_private_key.ssh.public_key_openssh
     user_data           = filebase64("${path.module}/cloud-init.yaml")
+  }
+
+  lifecycle {
+    ignore_changes = [
+      source_details # forces replacement
+    ]
   }
 }
 
