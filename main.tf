@@ -9,9 +9,19 @@ resource "local_file" "ssh_private_key" {
   file_permission = "0600"
 }
 
+resource "oci_identity_compartment" "vpn" {
+  compartment_id = var.tenancy_ocid
+  name           = "vpn"
+  description    = "VPN"
+}
+
+data "oci_identity_availability_domains" "availability_domains" {
+  compartment_id = oci_identity_compartment.vpn.id
+}
+
 resource "oci_core_instance" "instance" {
-  availability_domain = "gHLA:US-SANJOSE-1-AD-1" # TODO
-  compartment_id      = var.compartment_id
+  availability_domain = data.oci_identity_availability_domains.availability_domains.availability_domains[0].name
+  compartment_id      = oci_identity_compartment.vpn.id
   shape               = var.instance_shape
 
   instance_options {
@@ -36,11 +46,11 @@ resource "oci_core_instance" "instance" {
 
 resource "oci_core_vcn" "vcn" {
   cidr_block     = var.vcn_cidr_blocks[0] # TODO deprecated, use cidr_blocks instead
-  compartment_id = var.compartment_id
+  compartment_id = oci_identity_compartment.vpn.id
 }
 
 resource "oci_core_security_list" "security_list" {
-  compartment_id = var.compartment_id
+  compartment_id = oci_identity_compartment.vpn.id
   vcn_id         = oci_core_vcn.vcn.id
 
   ingress_security_rules {
@@ -97,7 +107,7 @@ resource "oci_core_security_list" "security_list" {
 
 resource "oci_core_subnet" "subnet" {
   cidr_block     = var.subnet_cidr_block
-  compartment_id = var.compartment_id
+  compartment_id = oci_identity_compartment.vpn.id
   route_table_id = oci_core_vcn.vcn.default_route_table_id
   vcn_id         = oci_core_vcn.vcn.id
 
@@ -108,7 +118,7 @@ resource "oci_core_subnet" "subnet" {
 }
 
 resource "oci_core_internet_gateway" "internet_gateway" {
-  compartment_id = var.compartment_id
+  compartment_id = oci_identity_compartment.vpn.id
   vcn_id         = oci_core_vcn.vcn.id
 }
 

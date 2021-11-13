@@ -13,7 +13,7 @@ variable "region" {}
 variable "private_key" {}
 
 variable "instance_image_id" {
-  default = "ocid1.image.oc1.us-sanjose-1.aaaaaaaan4g4q527bljtyczck6xrsutbzps6h7mut2xcfhnbzw66sbbsvwoq"
+  default = "ocid1.image.oc1.us-sanjose-1.aaaaaaaan4g4q527bljtyczck6xrsutbzps6h7mut2xcfhnbzw66sbbsvwoq" # TODO
 }
 
 variable "vcn_cidr_blocks" {
