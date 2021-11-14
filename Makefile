@@ -1,7 +1,13 @@
 .POSIX:
 
-default:
+default: infra config
+
+.PHONY:
+infra:
 	make -C infra
+
+.PHONY:
+config:
 	make -C infra private.pem
 	make -C config
 
