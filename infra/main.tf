@@ -32,7 +32,7 @@ resource "oci_core_instance" "instance" {
   }
 
   create_vnic_details {
-    assign_public_ip = "true"
+    assign_public_ip = "false"
     subnet_id        = oci_core_subnet.subnet.id
   }
 
@@ -50,6 +50,25 @@ resource "oci_core_instance" "instance" {
       source_details # forces replacement
     ]
   }
+}
+
+data "oci_core_vnic_attachments" "vnic_attachments" {
+  compartment_id = oci_identity_compartment.vpn.id
+  instance_id    = oci_core_instance.instance.id
+}
+
+data "oci_core_vnic" "vnic" {
+  vnic_id = lookup(data.oci_core_vnic_attachments.vnic_attachments.vnic_attachments[0], "vnic_id")
+}
+
+data "oci_core_private_ips" "private_ip" {
+  vnic_id = data.oci_core_vnic.vnic.id
+}
+
+resource "oci_core_public_ip" "public_ip" {
+  compartment_id = oci_identity_compartment.vpn.id
+  lifetime       = "RESERVED"
+  private_ip_id  = lookup(data.oci_core_private_ips.private_ip.private_ips[0], "id")
 }
 
 resource "oci_core_vcn" "vcn" {
