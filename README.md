@@ -1,4 +1,4 @@
-# VPN
+# Free VPN
 
 Create an always free WireGuard VPN server on Oracle Cloud using Terraform and Ansible.
 
