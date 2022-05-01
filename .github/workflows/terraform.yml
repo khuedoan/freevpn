@@ -1,12 +1,11 @@
 name: 'Terraform'
 
 on:
+  schedule:
+    - cron: '0 0 * * *'
   push:
     branches:
     - master
-    paths:
-    - infra/**
-  pull_request:
 
 jobs:
   terraform:
