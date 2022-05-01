@@ -1,5 +1,5 @@
 - name: Install Docker
-  become: yes
+  become: true
   apt:
     name:
       - docker.io
@@ -7,8 +7,8 @@
       - python3-docker
 
 - name: Enable and start Docker service
-  become: yes
+  become: true
   systemd:
     name: docker
     state: started
-    enabled: yes
+    enabled: true

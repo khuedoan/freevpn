@@ -1,5 +1,5 @@
 - hosts: all
-  become: yes
+  become: true
   roles:
     - role: docker
     - role: wireguard
