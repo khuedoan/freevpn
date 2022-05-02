@@ -1,3 +1,17 @@
+- hosts: localhost
+  tasks:
+    - name: Get Terraform outputs
+      terraform:
+        project_path: ../infra
+        state: present
+      register: terraform
+    - name: Add the VM to inventory
+      ansible.builtin.add_host:
+        name: vpn
+        ansible_user: ubuntu
+        ansible_host: "{{ terraform.outputs.instance_public_ip.value }}"
+      changed_when: false
+
 - hosts: all
   become: true
   roles:
