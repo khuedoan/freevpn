@@ -1,0 +1,13 @@
+- name: Install packages for automatic upgrade
+  apt:
+    update_cache: yes
+    name:
+      - unattended-upgrades
+
+- name: Copy automatic upgrade config file
+  copy:
+    src: 50unattended-upgrades
+    dest: /etc/apt/apt.conf.d/50unattended-upgrades
+    mode: 0644
+  notify:
+    - Restart unattended upgrades service

@@ -1,5 +1,6 @@
 - hosts: all
   become: true
   roles:
+    - role: automatic_upgrade
     - role: docker
     - role: wireguard
