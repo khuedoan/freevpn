@@ -14,14 +14,13 @@ Create an always free WireGuard VPN server on Oracle Cloud using Terraform and A
   - Select Generate API Key Pair, download the private key and click Add
   - Check the Configuration File Preview for the values
 
-Put those values in `./terraform.auto.tfvars`:
+Put those values in `./infra/terraform.tfvars`:
 
-```ini
-user_ocid = "ocid1.user.xxx"
+```hcl
+user_id = "ocid1.user.xxx"
 fingerprint = "xx:xx:xx"
-tenancy_ocid = "ocid1.tenancy.xxx"
+tenancy_id = "ocid1.tenancy.xxx"
 region = "us-xxx"
-compartment_id = "ocid1.tenancy.xxx" # likely the same as tenancy_ocid
 private_key = <<EOT
 -----BEGIN PRIVATE KEY-----
 xxx (from the downloaded private key)
